@@ -1,10 +1,11 @@
 import { FiArrowLeft } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import addCoffeeBg from "/image/11.png";
 
 const CoffeeAdd = () => {
-
-    const coffeeAdd = e =>{
+    const coffeeAdd = (e) => {
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
@@ -21,13 +22,30 @@ const CoffeeAdd = () => {
             photo,
             chef,
             taste,
-            details
-        }
-        console.log(newCoffee);
-    }
+            details,
+        };
+        fetch("http://localhost:8080/coffee-add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newCoffee),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data.insertedId) {
+                    form.reset();
+                    toast('Coffee Added Successfully!');
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
     return (
         <div className="" style={{ backgroundImage: `url(${addCoffeeBg})` }}>
-            <div className="container mx-auto md:px-20 py-5">
+            <div className="container mx-auto px-3 md:px-20 py-5">
                 <Link
                     to="/"
                     className="text-xl text-slate-700 items-center flex gap-2 py-2"
@@ -168,6 +186,20 @@ const CoffeeAdd = () => {
                     </form>
                 </div>
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+            {/* Same as */}
+            <ToastContainer />
         </div>
     );
 };
