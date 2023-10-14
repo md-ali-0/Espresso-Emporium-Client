@@ -1,11 +1,14 @@
 import { FiArrowLeft } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Link, useLoaderData } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import addCoffeeBg from "/image/11.png";
 
-const CoffeeAdd = () => {
-    const coffeeAdd = (e) => {
+const CofeeUpdate = () => {
+    const coffee = useLoaderData();
+    const { _id, name, supplier, category, photo, chef, taste, details } = coffee;
+
+    const coffeeUpdate = (e) => {
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
@@ -15,7 +18,7 @@ const CoffeeAdd = () => {
         const chef = form.chef.value;
         const taste = form.taste.value;
         const details = form.details.value;
-        const newCoffee = {
+        const updateCoffee = {
             name,
             supplier,
             category,
@@ -24,24 +27,22 @@ const CoffeeAdd = () => {
             taste,
             details,
         };
-        fetch("http://localhost:8080/coffee-add", {
-            method: "POST",
+        fetch(`http://localhost:8080/coffee-edit/${_id}`,{
+            method: "PUT",
+            body: JSON.stringify(updateCoffee),
             headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newCoffee),
+                'Content-Type': 'application/json'
+            }
         })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                if (data.insertedId) {
-                    form.reset();
-                    toast.success('Coffee Added Successfully!');
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        .then(res=>res.json())
+        .then(data=>{
+            if (data.modifiedCount) {
+                toast.success('Coffee Updated Successfully!');
+            }
+        })
+        .catch(err=>{
+            console.log(err);
+        })
     };
     return (
         <div className="" style={{ backgroundImage: `url(${addCoffeeBg})` }}>
@@ -56,7 +57,7 @@ const CoffeeAdd = () => {
                 </Link>
                 <div className="bg-product_bg rounded p-5">
                     <h3 className="text-3xl text-center py-2">
-                        Add New Coffee
+                        Update Existing Coffee Details
                     </h3>
                     <p className="text-lg text-center md:px-20">
                         It is a long established fact that a reader will be
@@ -65,7 +66,7 @@ const CoffeeAdd = () => {
                         that it has a more-or-less normal distribution of
                         letters, as opposed to using Content here.
                     </p>
-                    <form onSubmit={coffeeAdd}>
+                    <form onSubmit={coffeeUpdate}>
                         <div className="flex flex-col md:flex-row gap-5">
                             <div className="w-full md:w-1/2">
                                 <div className="py-2">
@@ -81,6 +82,7 @@ const CoffeeAdd = () => {
                                         name="name"
                                         id="name"
                                         placeholder="Enter coffee name"
+                                        defaultValue={name}
                                     />
                                 </div>
                                 <div className="py-2">
@@ -96,6 +98,7 @@ const CoffeeAdd = () => {
                                         name="supplier"
                                         id="supplier"
                                         placeholder="Enter coffee supplier"
+                                        defaultValue={supplier}
                                     />
                                 </div>
                                 <div className="py-2">
@@ -111,6 +114,7 @@ const CoffeeAdd = () => {
                                         name="category"
                                         id="category"
                                         placeholder="Enter coffee category"
+                                        defaultValue={category}
                                     />
                                 </div>
                                 <div className="py-2">
@@ -126,6 +130,7 @@ const CoffeeAdd = () => {
                                         name="photo"
                                         id="photo"
                                         placeholder="Enter coffee photo url"
+                                        defaultValue={photo}
                                     />
                                 </div>
                             </div>
@@ -143,6 +148,7 @@ const CoffeeAdd = () => {
                                         name="chef"
                                         id="chef"
                                         placeholder="Enter coffee chef"
+                                        defaultValue={chef}
                                     />
                                 </div>
                                 <div className="py-2">
@@ -158,6 +164,7 @@ const CoffeeAdd = () => {
                                         name="taste"
                                         id="taste"
                                         placeholder="Enter coffee taste"
+                                        defaultValue={taste}
                                     />
                                 </div>
                                 <div className="py-2">
@@ -173,6 +180,7 @@ const CoffeeAdd = () => {
                                         name="details"
                                         id="details"
                                         placeholder="Enter coffee details"
+                                        defaultValue={details}
                                     />
                                 </div>
                             </div>
@@ -181,7 +189,7 @@ const CoffeeAdd = () => {
                             type="submit"
                             className="bg-primary hover:bg-gray-100 hover:text-gray-500 text-gray-800 rounded-md border-2 border-dark_01 px-3 py-1 my-2 w-full"
                         >
-                            Add Coffee
+                            Update Coffee
                         </button>
                     </form>
                 </div>
@@ -204,4 +212,4 @@ const CoffeeAdd = () => {
     );
 };
 
-export default CoffeeAdd;
+export default CofeeUpdate;

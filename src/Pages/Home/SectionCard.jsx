@@ -6,8 +6,8 @@ import iconFour from "/icons/4.png";
 const SectionCard = () => {
     return (
         <section className="bg-secondary">
-            <div className="container mx-auto py-5">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div className="container mx-auto py-5 md:px-20">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
                     <div className="flex flex-col px-5 py-2">
                         <img className="w-16" src={iconOne} alt="" />
                         <h3 className="text-2xl">Awesome Aroma</h3>
