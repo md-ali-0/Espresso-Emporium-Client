@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import CoffeeCard from "../Coffee/CoffeeCard";
 import Banner from "./Banner";
 import SectionCard from "./SectionCard";
@@ -12,7 +13,7 @@ const Home = () => {
                 <div className="flex flex-col justify-center items-center py-5">
                     <p>--- Sip & Savor ---</p>
                     <h3 className="text-dark_01 text-4xl">Our Popular Products</h3>
-                    <button className="bg-primary hover:bg-gray-100 hover:text-gray-500 text-gray-100 rounded-md border-2 border-dark_01 px-3 py-1 my-2">Add Coffee</button>
+                    <Link to='/coffee-add' className="bg-primary hover:bg-gray-100 hover:text-gray-500 text-gray-100 rounded-md border-2 border-dark_01 px-3 py-1 my-2">Add Coffee</Link>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2">
                     <CoffeeCard></CoffeeCard>

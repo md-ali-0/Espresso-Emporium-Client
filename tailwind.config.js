@@ -13,7 +13,8 @@ export default {
         dark_01: '#331A15',
       },
       fontFamily: {
-        'rancho': ['Rancho', 'cursive']
+        'rancho': ['Rancho', 'cursive'],
+        'raleway': ['Raleway', 'cursive']
       }
     },
   },
