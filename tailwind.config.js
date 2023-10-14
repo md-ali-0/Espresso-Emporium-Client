@@ -6,6 +6,12 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: '#E3B577',
+        secondary: '#ECEAE3',
+        product_bg: '#F5F4F1',
+        dark_01: '#331A15',
+      },
       fontFamily: {
         'rancho': ['Rancho', 'cursive']
       }

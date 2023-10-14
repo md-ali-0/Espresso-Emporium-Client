@@ -1,4 +1,4 @@
-import headBg from '/header-bg.jpeg';
+import headBg from '/image/header-bg.jpeg';
 import logo from '/logo.png';
 
 const Header = () => {
