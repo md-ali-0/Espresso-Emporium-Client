@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../Layout/MainLayout";
+import Login from "../Pages/Auth/Login";
+import Register from "../Pages/Auth/Register";
 import CofeeUpdate from "../Pages/Coffee/CofeeUpdate";
 import Coffee from "../Pages/Coffee/Coffee";
 import CoffeeAdd from "../Pages/Coffee/CoffeeAdd";
@@ -29,6 +31,14 @@ const Router = createBrowserRouter([
                 loader: ({params})=>fetch(`http://localhost:8080/coffee/${params.id}`),
                 element: <CofeeUpdate></CofeeUpdate>
             },
+            {
+                path: '/login',
+                element: <Login></Login>,
+            },
+            {
+                path: '/register',
+                element: <Register></Register>
+            }
         ]
     }
 ])
