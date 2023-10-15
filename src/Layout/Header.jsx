@@ -8,6 +8,7 @@ import logo from "/logo.png";
 
 const Header = () => {
     const { loading } = useContext(AuthContext);
+    console.log(loading);
     if (loading) {
         return (
             <div className="flex items-center justify-center w-full h-screen bg-gray-50 z-50">

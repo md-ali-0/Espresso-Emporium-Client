@@ -6,6 +6,7 @@ import CofeeUpdate from "../Pages/Coffee/CofeeUpdate";
 import Coffee from "../Pages/Coffee/Coffee";
 import CoffeeAdd from "../Pages/Coffee/CoffeeAdd";
 import Home from "../Pages/Home/Home";
+import Users from "../Pages/Users/Users";
 
 const Router = createBrowserRouter([
     {
@@ -30,6 +31,11 @@ const Router = createBrowserRouter([
                 path: '/coffee-edit/:id',
                 loader: ({params})=>fetch(`http://localhost:8080/coffee/${params.id}`),
                 element: <CofeeUpdate></CofeeUpdate>
+            },
+            {
+                path: '/users',
+                loader: ()=>fetch('http://localhost:8080/users'),
+                element: <Users></Users>
             },
             {
                 path: '/login',

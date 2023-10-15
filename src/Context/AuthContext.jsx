@@ -6,7 +6,7 @@ import app from "../Firebase/firebase.config";
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-    const [users, setUsers] = useState(null);
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const auth = getAuth(app);
@@ -30,17 +30,20 @@ const AuthProvider = ({ children }) => {
     }
     useEffect(()=>{
         const unSubscribe = onAuthStateChanged(auth, currentUser =>{
-            if (currentUser) {
-                setUsers(currentUser)
-            } else {
-                setUsers(null)
+            if(currentUser){
+                setUser(currentUser)
+            }else{
+                setUser(null)
             }
             setLoading(false)
-            return ()=> unSubscribe();
         })
+        return ()=>{
+            unSubscribe()
+        };
     },[auth])
+    
     const authInfo = { 
-        users,
+        user,
         loading,
         createGoogleLogin,
         createSignUp,
