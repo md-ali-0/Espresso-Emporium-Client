@@ -1,6 +1,6 @@
+import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import CoffeeCard from "../Coffee/CoffeeCard";
 import Banner from "./Banner";
 import InstagramFollow from "./InstagramFollow";
@@ -8,17 +8,18 @@ import SectionCard from "./SectionCard";
 import coffeBg from "/image/1.png";
 
 const Home = () => {
-    const coffees = useLoaderData();
-
-    const coffeeDeleteSwalButton = withReactContent(Swal);
+    const loadCoffees = useLoaderData();
+    const [coffees, setCoffees] = useState(loadCoffees)
 
     const coffeeDelete = (_id) => {
-        coffeeDeleteSwalButton
-            .fire({
-                title: "Do you want to save the changes?",
-                showDenyButton: true,
-                confirmButtonText: "Delete",
-                denyButtonText: `Don't Delete`,
+        Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
             })
             .then((result) => {
                 /* Read more about isConfirmed, isDenied below */
@@ -33,14 +34,26 @@ const Home = () => {
                         .then((data) => {
                             console.log(data);
                             if (data.deletedCount) {
-                                console.log("deleted");
+                                Swal.fire(
+                                    "Deleted!",
+                                    "Your file has been deleted.",
+                                    "success"
+                                );
+                                const newCoffee = loadCoffees.filter(coffee=>coffee._id !== _id)
+                                setCoffees(newCoffee)
                             }
                         })
                         .catch((err) => {
                             console.log(err);
                         });
-                } else if (result.isDenied) {
-                    Swal.fire("Changes are not saved", "", "info");
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    {
+                        Swal.fire(
+                          'Cancelled',
+                          'Your imaginary file is safe :)',
+                          'error'
+                        )
+                      }
                 }
             });
     };
